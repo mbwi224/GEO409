@@ -52,16 +52,16 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Spelling errors can shove it up thier ass</h1>
+        <h2>Variables, why you not spelled right!?!?!</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
+        <p>Map authored by Michael Williams</p>
+        <p>No.</p>
+        <p>Make me.
         </p>
     </footer>
 
@@ -90,7 +90,7 @@
         // create a second variable for a second city's area here
         // create a third variable for a third city's area here
         
-        prepareData(lexArea); // modify function call to pass 2 additional
+        prepareData(lexArea, frankArea, richArea); // modify function call to pass 2 additional
                               // arguments
         
         function prepareData(lexArea, frankArea, richArea) { /* include 2 more parameters here */
@@ -119,11 +119,11 @@
             
             for(var i = 0; i < cities.length; i++) {
 
-                var density =  calPopDensity();
+                var density =  calcPopDensity(cityPops, cityAreas, units);
                 
 
                 var popup = "<b>"+cities[i]+"</b><br>"
-                                +"<b>Density</b>: "+density.toLocaleString()+" people per sq " + units;
+                                +"<b>Density</b>: "+density[i].toLocaleString()+" people per sq " + units;
 
                 L.marker(cityCoords[i]).addTo(map)
                     .bindPopup(popup);
@@ -137,16 +137,25 @@
         
         function calcPopDensity(cityPops, cityAreas, units) {
             
-            if(units == 'miles') {
+            var densitySingle = [];
+            
+            if(units == "miles") {
                 
-             for (var i =0; i < cities.length; i++) {
+             for (var i = 0; i < cityPops.length; i++) {
                  
-                 var density = citiesArea[i] / citiesPop[i];
+                 densitySingle[i] = cityPops[i] / cityAreas[i];
                  
-                 return [density]
              }
             }
+            else if (units == "km") {
+                
+                for (var i = 0; i < cityPops.length; i++) {
+                     
+                     densitySingle[i] = cityPops[i] / (cityAreas[i] * 2.59);
+              }
+            }
             
+            return densitySingle;
         }
 
         // end writing/editing Task E code here
