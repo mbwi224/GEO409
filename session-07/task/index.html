@@ -121,9 +121,19 @@
             }
         ];
         
-        for (var key in cities) {
-            console.log(cities[key]);
-        }
+//        First way to loop
+//        for(var i = 0; i < cities.length; i++) {
+//        console.log(cities[i]);
+//        };
+        
+//        Second way to loop
+//        for (var key in cities) {
+//            console.log(cities[key]);
+//        };
+        
+        for (var key in cities)  {
+            console.log(cities[key].properties.coordinates);
+        };
             
 
             
