@@ -92,6 +92,8 @@
         
         // Begin writing/modifying code for Task F here
         
+        
+        
         var cities = [
              {
                  name: "Louisville",
@@ -100,8 +102,30 @@
                      population: 756832,
                      state: "KY"
                  }
-             }    
+             },
+            {
+                name: "Cincinnati",
+                properties: {
+                    coordinates: [39.1000, -84.5167],
+                    population: 820445,
+                    state: "IN"
+                }
+            },
+            {
+                name: "Columbus",
+                properties: {
+                    coordinates: [39.9833, -82.9833],
+                    population: 822553,
+                    state: "OH"
+                }
+            }
         ];
+        
+        for (var key in cities) {
+            console.log(cities[key]);
+        }
+            
+
             
         // End code for Task F
         
