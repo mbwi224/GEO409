@@ -79,7 +79,7 @@
 
         var map = L.map('map', {
             center: [38.96,-85.36],
-            zoom: 8,
+            zoom: 7,
         });
        
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
@@ -107,16 +107,16 @@
                 name: "Cincinnati",
                 properties: {
                     coordinates: [39.1000, -84.5167],
-                    population: 820445,
-                    state: "IN"
+                    population: 297517,
+                    state: "OH"
                 }
             },
             {
-                name: "Columbus",
+                name: "Indianapolis",
                 properties: {
-                    coordinates: [39.9833, -82.9833],
-                    population: 822553,
-                    state: "OH"
+                    coordinates: [39.7910, -86.1480],
+                    population: 852866,
+                    state: "IN"
                 }
             }
         ];
@@ -125,9 +125,17 @@
        
 //        First way to loop
         for(var i = 0; i < cities.length; i++){
+            
             var props = cities[i].properties;
+            
             console.log(props);
-        console.log(cities[i].properties.state);
+            
+            var popup = "Temp String";
+            
+            L.marker(props.coordinates).addTo(map)
+            .bindPopup(popup); 
+            
+            console.log(cities[i].properties.state);
         };
 //        Second way to loop
 //        for (var key in cities) {
