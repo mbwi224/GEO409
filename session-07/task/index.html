@@ -126,6 +126,8 @@
 //        First way to loop
         for(var i = 0; i < cities.length; i++){
             
+            buildPopup(name, population, state);
+            
             var props = cities[i].properties;
             
             console.log(props);
@@ -135,8 +137,31 @@
             L.marker(props.coordinates).addTo(map)
             .bindPopup(popup); 
             
-            console.log(cities[i].properties.state);
+          
         };
+        
+        function buildPopup(name, pop, state){
+        
+//            if(name == "Louisville"){
+//                state == "KY";}
+//            else(name == "Cincinnati"){
+//                state =="OH";}
+//            else(name == "Indianapolis"){
+//                state == "IN";};
+            
+            if (state == "KY"){
+                var colorClass = "blue";}
+            else if (state == "OH"){
+                var colorClass = "red";}
+            else if (state == "IN"){
+                var colorClass = "purple";}
+            
+            ;}
+                
+       
+            
+        
+        
 //        Second way to loop
 //        for (var key in cities) {
 //            console.log(cities[key]);
