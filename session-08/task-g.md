@@ -4,7 +4,7 @@
 
 The goal of this task is to create a Leaflet map with a unique basemap of your choosing. When the user clicks once on the map, the map is recentered on that click point and zoomed to a desired zoom level. Furthermore, the JavaScript calculates two pieces of information: 1) how far (the distance in meters) that point click is from the Red Iguana restaurant (located in Salt Lake City at latitude 40.7718 and longitude -111.9124), and 2) how far the Red Iguana is from the Southwest corder of the recentered map view.
 
-Save your changes to your *index.html* file and **commit changes to your local GitHub repository** as you work. Begin your coding beneath line 93 containing the comment `begin writing/editing Task G code here`.
+Save your changes to your *index.html* file and **commit changes to your local GitHub repository** as you work.
 
 Open the starter *index.html* file in your text editor and examine the provided JavaScript code:
 

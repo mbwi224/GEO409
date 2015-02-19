@@ -132,7 +132,8 @@ Again you might this this is overkill -- after all the first example works just 
 ```javascript
 var mapCenter = L.latLng(38.0489,-96.5025);
 var otherCity = L.latLng(38.1489,-96.5125);
-mapCenter.distanceTo(otherCity);
+var distance = mapCenter.distanceTo(otherCity);
+console.log(distance); // will output distance between cities in meters
 ```
 
 In this examples, *distanceTo* is a method we can use on a *LatLng* object to calculate the distance between it and another *LatLng* object.
