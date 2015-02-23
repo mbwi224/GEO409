@@ -230,19 +230,21 @@
                 
                 var center = layer.getLatLng();
                 
-                console.log(center);
+//                console.log(center);
                 
                 var radius = layer.getRadius();
                 
-                console.log(radius);
+//                console.log(radius);
                 
                 var clicktoCenter = center.distanceTo(click);
                 
-                console.log(clicktoCenter);
+//                console.log(clicktoCenter);
                 
                 var clickFromRadius = (clicktoCenter - radius);
                 
-                console.log(clickFromRadius);
+//                console.log(clickFromRadius);
+                
+//              step 10 here
                 
                 if (clickFromRadius < 2200) {
                     layer.setStyle(dangerOptions);
@@ -251,8 +253,6 @@
                     layer.setStyle(safeOptions);
                 };
                 
-                
-//              step 10 here
             });
         }
         
