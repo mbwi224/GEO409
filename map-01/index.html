@@ -228,13 +228,30 @@
             iguanaGroup.eachLayer(function(layer) {
 //              step 9 here
                 
-                var center = later.getLatLng();
+                var center = layer.getLatLng();
+                
+                console.log(center);
                 
                 var radius = layer.getRadius();
                 
-                var clickToCenter = layer.distanceTo(Click);
+                console.log(radius);
                 
-                var clickFromRadius = 
+                var clicktoCenter = center.distanceTo(click);
+                
+                console.log(clicktoCenter);
+                
+                var clickFromRadius = (clicktoCenter - radius);
+                
+                console.log(clickFromRadius);
+                
+                if (clickFromRadius < 2200) {
+                    layer.setStyle(dangerOptions);
+                }
+                else if (clickFromRadius > 2200) {
+                    layer.setStyle(safeOptions);
+                };
+                
+                
 //              step 10 here
             });
         }
