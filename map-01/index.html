@@ -175,12 +175,12 @@
         
 //      steps 3 here
         
-        var safeIguanaOptions = {
+        var safeOptions = {
             color: 'blue',
             fillColor: 'bule'
         }
         
-        var dangerZoneOptions = {
+        var dangerOptions = {
             color: 'red',
             fillColor: 'red'
         }
@@ -189,8 +189,12 @@
         
         var iguanaLayerGroup = L.layerGroup();
         
-        
+        for (var i in iguanaZones) {
             
+            var landingSite = L.Circle (iguanaZones[i].coordinates, iguanaZones[i].properties.size,                             safeOptions, iguanaZones[i].name);
+            
+            landingSite.addto(iguanaLayerGroup);
+                                        
         var marker;  // keep this code
        
         map.on('click', function(e) {  // keep this code
