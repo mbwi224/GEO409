@@ -189,11 +189,12 @@
         
         var iguanaLayerGroup = L.layerGroup();
         
-        for (var i in iguanaZones) {
+     
+        for (var i = 0 ; i < iguanaZones.length; i++) {
             
-            var landingSite = L.Circle (iguanaZones[i].coordinates, iguanaZones[i].properties.size,                             safeOptions, iguanaZones[i].name);
+            L.circle(iguanaZones[i].coordinates, iguanaZones[i].properties.size).addTo(iguanaLayerGroup)};
             
-            landingSite.addto(iguanaLayerGroup);
+            console.log(iguanaLayerGroup);
                                         
         var marker;  // keep this code
        
@@ -204,7 +205,16 @@
 //                map.removeLayer(marker);
 //            }
 
-//              step seven here            
+//              step seven here   
+            var click = e.latlng;
+            
+            marker = L.marker(click);
+            
+            marker.addTo(map);
+
+            
+            
+            
 //              step eight here
             
         });  // keep this code
