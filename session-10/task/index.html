@@ -62,36 +62,260 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Death and Drink</h1>
+        <h2>A fun map to depress and drunken even the most dependably sober souls</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
+        <p>Map authored by Michael Williams</p>
+        <p>Blah</p>
+        <p>Blah, blah.
         </p>
     </footer>
 
     <script>
 
         var map = L.map('map', {
-            center: [38.96,-85.36],
-            zoom: 8,
+            center: [38.057036 , -84.501525],
+            zoom: 14     
         });
        
         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
             attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
             subdomains: '0123',
-            minZoom: 4,
-            maxZoom: 12
+            minZoom: 14,
+            maxZoom: 18
         });
         map.addLayer(tiles);
         
         // Begin writing/modifying code for Task H here
         
+        
+        var lexTour = {
+            "type": "FeatureCollection",
+            "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7e7e7e",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "Name": "Blue Stallion Brewery",
+        "Description": "Less well known brewery that is consistently the best in town.",
+        "Radius": 100
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.50138568878174,
+          38.05711392698028
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7e7e7e",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "Name": "West Sixth Brewery",
+        "Description": "Most popular brewery in Lexington, with consistently good 'flagship' styles. Some                   beers are hit or miss in quality.",
+        "Radius": 100
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.4920301437378,
+          38.05954686723
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "marker-color": "#7e7e7e",
+        "marker-size": "medium",
+        "marker-symbol": "",
+        "Name": "Country Boy Brewery",
+        "Description": "This brewery has a devoted following and offers the largest selection of                            experimental beers. Quality is hit or miss.",
+        "Radius": 100
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -84.50915336608887,
+          38.0440016899851
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#555555",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#555555",
+        "fill-opacity": 0.5,
+        "Name": "Lexington Cemetery",
+        "Description": "Dead hopes and dreams."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -84.51559066772461,
+              38.060830886418856
+            ],
+            [
+              -84.51387405395508,
+              38.06404083581908
+            ],
+            [
+              -84.50958251953125,
+              38.0674195777919
+            ],
+            [
+              -84.50670719146729,
+              38.06336506870036
+            ],
+            [
+              -84.50726509094238,
+              38.062925816726306
+            ],
+            [
+              -84.50241565704346,
+              38.058330407215614
+            ],
+            [
+              -84.50559139251708,
+              38.057012552714596
+            ],
+            [
+              -84.50713634490967,
+              38.055390545366365
+            ],
+            [
+              -84.51559066772461,
+              38.060830886418856
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -84.50700759887695,
+            38.05559329825077
+          ],
+          [
+            -84.50580596923828,
+            38.05414022350097
+          ],
+          [
+            -84.50889587402344,
+            38.05180848512807
+          ],
+          [
+            -84.50984001159667,
+            38.05052430763911
+          ],
+          [
+            -84.50984001159667,
+            38.049375287631726
+          ],
+          [
+            -84.50932502746582,
+            38.047144785544745
+          ],
+          [
+            -84.51035499572754,
+            38.04653645499928
+          ],
+          [
+            -84.50846672058105,
+            38.04457624441281
+          ],
+          [
+            -84.50906753540039,
+            38.04423827176607
+          ],
+          [
+            -84.50812339782715,
+            38.04329194005559
+          ],
+          [
+            -84.48898315429688,
+            38.0565394709514
+          ],
+          [
+            -84.49224472045898,
+            38.05944549633448
+          ],
+          [
+            -84.49662208557129,
+            38.05647188759273
+          ],
+          [
+            -84.49885368347168,
+            38.058566942690966
+          ],
+          [
+            -84.50117111206055,
+            38.057147718370985
+          ]
+        ]
+      }
+    }
+  ]
+}
+  
+        var lexCircles = {
+            color: "#2ECCFA"
+        }
+        
+        var lexPolygon = {
+            color: "#6E6E6E"
+        }
+        
+        var lexLine = {
+            color: "#FF0000"
+        }
+        
+        
+        
+        var lexFeatures = L.geoJson(lexTour, {
+            pointToLayer : function(feature, latLng) {
+                return L.circle(latLng, feature.properties.Radius)
+            },
+            
+            style : function(feature) {
+            return { dashArray: "10, 15",
+                     weight: 10
+                   }   
+            },
+            
+                onEachFeature: function(feature, layer) {
+            if(feature.geometry.type == "Point") {
+                layer.setStyle(lexCircles);
+                layer.bindPopup("<b>"+feature.properties.Name +"</b><br>" + feature.properties.Description)
+            }   
+            if(feature.geometry.type == "Polygon") {
+                layer.setStyle(lexPolygon);
+                layer.bindPopup("<b>"+feature.properties.Name +"</b><br>" + feature.properties.Description)
+            }
+        },  
+                                                           
+                                   
+                                   
+        }).addTo(map);
 
           
     </script>
