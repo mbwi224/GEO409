@@ -102,9 +102,17 @@
                      weight: 1,
                      fillColor: 'blue',
                      fillOpacity: .7,
-                     radius: getRadius(feature.properties.capacity)
+                     radius: getRadius(feature.properties.source["Hydro"])
                  });   
             },
+            
+            filter: function(feature, layer) {
+                if(feature.properties.source["Hydro"] &&
+                  feature.properties.source["Hydro"] < 500) {
+                    return feature;   
+                }
+            },
+        
             
         }).addTo(map);
         
