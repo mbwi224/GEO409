@@ -92,10 +92,26 @@
         
         
         plants.features.sort(function(a,b) {
-			return b.properties.capacity_mw - a.properties.capacity_mw;
+			return b.properties.capacity - a.properties.capacity;
 		});
         
+        L.geoJson(plants, {
+            pointToLayer: function(feature,latlng) {
+                 return L.circleMarker(latlng, {
+                     color: 'black',
+                     weight: 1,
+                     fillColor: 'blue',
+                     fillOpacity: .7,
+                     radius: getRadius(feature.properties.capacity)
+                 });   
+            },
+            
+        }).addTo(map);
         
+        function getRadius(val) {
+            var radius = Math.sqrt(val/Math.PI);
+            return radius * .8;   
+        }  
 
           // add JavaScript here
         
