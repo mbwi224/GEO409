@@ -89,6 +89,13 @@
             maxZoom: 18
         });
         map.addLayer(tiles);
+        
+        
+        plants.features.sort(function(a,b) {
+			return b.properties.capacity_mw - a.properties.capacity_mw;
+		});
+        
+        
 
           // add JavaScript here
         
