@@ -83,13 +83,14 @@
        
         var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', 
                                          {
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;                              <a href="http://cartodb.com/attributions">CartoDB</a>',
             subdomains: 'abcd',
             minZoom: 0,
             maxZoom: 18
         });
         map.addLayer(tiles);
         
+    var lexington = L.latLng(38.0297, -84.4947);
         
         plants.features.sort(function(a,b) {
 			return b.properties.capacity - a.properties.capacity;
@@ -107,8 +108,10 @@
             },
             
             filter: function(feature, layer) {
-                if(feature.properties.source["Hydro"] &&
-                  feature.properties.source["Hydro"] < 500) {
+                var plantLatLng = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+                feature.properties.distanceFromLex = (plantLatLng.distanceTo(lexington))
+                if((feature.properties.distanceFromLex < 400) && (feature.properties.source["Hydro"] &&
+                   feature.properties.source["Hydro"] < 500)) {
                     return feature;   
                 }
             },
