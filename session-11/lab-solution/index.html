@@ -91,9 +91,9 @@
         L.geoJson(plants, {
             pointToLayer: function(feature,latlng) {
                  return L.circleMarker(latlng, {
-                     color: 'orange',
+                     color: 'green',
                      weight: 1,
-                     fillColor: 'yellow',
+                     fillColor: 'blue',
                      fillOpacity: .8,
                      radius: getRadius(feature.properties.capacity_mw)
                  });   
