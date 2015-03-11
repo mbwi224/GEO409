@@ -79,6 +79,7 @@
         var map = L.map('map', {
             center: [38.0297, -84.4947],
             zoom: 6,
+            
         });
        
         var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', 
@@ -90,56 +91,14 @@
         });
         map.addLayer(tiles);
         
-    var lexington = L.latLng(38.0297, -84.4947);
         
         plants.features.sort(function(a,b) {
 			return b.properties.capacity - a.properties.capacity;
 		});
         
-        L.geoJson(plants, {
-            pointToLayer: function(feature,latlng) {
-                 return L.circleMarker(latlng, {
-                     color: 'green',
-                     weight: 1,
-                     fillColor: 'blue',
-                     fillOpacity: .7,
-                     radius: getRadius(feature.properties.source["Hydro"])
-                 });   
-            },
+
             
-            filter: function(feature, layer) {
-                var plantLatLng = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
-                feature.properties.distanceFromLex = (plantLatLng.distanceTo(lexington)) / 1000;
-                if((feature.properties.distanceFromLex < 400) && (feature.properties.source["Hydro"] &&
-                   feature.properties.source["Hydro"] < 500)) {
-                    return feature;   
-                }
-            },
-        
-            onEachFeature: function(feature,layer) {
-                var props = feature.properties;
-                var content = "<b>"+props.plant_name+"</b><br>"+
-                    props.capacity.toLocaleString()+" MW<br>";
-                var sourceType = props.source;
-                for(var fuel in sourceType){
-                    content+="<b>"+fuel+"</b>: "+sourceType[fuel].toLocaleString()+" MW<br>";
-                }
-                    content+= "This plant is " + "<b>" +props.distanceFromLex.toLocaleString() + " km" + "</b>" + " from Lexington, KY";
-                layer.bindPopup(content); 
-                
-                layer.on('mouseover', function() {
-                    layer.setStyle({
-                        fillColor: 'red'
-                    });
-                });
-                layer.on('mouseout', function() {
-                    layer.setStyle({
-                        fillColor: 'blue'
-                    });
-                });
-            }
-            
-        }).addTo(map);
+ 
         
         function getRadius(val) {
             var radius = Math.sqrt(val/Math.PI);
