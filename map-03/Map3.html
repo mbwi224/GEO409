@@ -78,7 +78,7 @@
         
         var map = L.map('map', {
             center: [38.0297, -84.4947],
-            zoom: 6,
+            zoom: 5,
             
         });
        
@@ -105,8 +105,10 @@
  
         
         var layerInfo = {
-            hydroLayer: {source:"Hydro", color:'#1f78b4'}, 
-            windLayer: {source:"Wind", color:'#a6cee3'}
+            coalLayer: {source:"Coal", color:'#636363'},
+            hydroLayer: {source:"Hydro", color:'#43a2ca'}, 
+            windLayer: {source:"Wind", color:'#a8ddb5'}
+            
         }
         var geoJsonLayers = {};
 
@@ -137,10 +139,34 @@
 
         var sourcesLabels = {
             "Hydro": geoJsonLayers.hydroLayer,
-            "Wind": geoJsonLayers.windLayer
+            "Wind": geoJsonLayers.windLayer,
+            "Coal": geoJsonLayers.coalLayer
         }
 
         L.control.layers(null, sourcesLabels, { collapsed:false }).addTo(map);
+        
+    map.on('click', function(e) {
+        for (var layer in layerInfo) {
+            geoJsonLayers[layer].eachLayer(function(layer){
+            var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
+
+            if(distance > 500) {
+                layer.setStyle({
+                    stroke: false,
+                    fill: false
+                });  
+            } else {
+               layer.setStyle({
+                    stroke: true,
+                    fill: true  
+               });  
+               layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
+                               "km</b><br> from the click point.");
+            }
+            });
+        }});
+        
+
 
           // add JavaScript here
         
