@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Geo409 Map 02</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        /* Additional style rules go here! */
+        
+   
+    
+    
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- add HTML here-->
+        <h1>Regional Low to Medium Hydroelectric Production </h1>
+        <h2>Plants shown are within 400 km of Lexington, KY and produce less than 500 megawatts </h2>
+    </header>
+
+    <div id='map'></div>
+
+        <!-- add HTML here-->
+    <footer>
+        <p>Map authored by <strike>Lord Commander of the Iguana Space Marines</strike> Lord Commander of Regional HydroElectric Power Assessment</p>
+        <p>Everything will be OK</p>
+        <p>As requested, no iguanas or iguana related material was used for assessment of the Lexington regional   hydroelectric power sources. Ignore rumors of the coming iguana landing fleet. The iguanas do not plan to sabotage your infrastructure. They are here for your protection.
+        </p>
+        <!-- add HTML here-->
+    </footer>
+        <!-- load external JS file here-->
+    <script src="power-plants-assignment.js"></script>
+    
+    <script>
+        
+    console.log(plants);
+        
+        var map = L.map('map', {
+            center: [38.0297, -84.4947],
+            zoom: 6,
+        });
+       
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', 
+                                         {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy;                              <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 18
+        });
+        map.addLayer(tiles);
+        
+    var lexington = L.latLng(38.0297, -84.4947);
+        
+        plants.features.sort(function(a,b) {
+			return b.properties.capacity - a.properties.capacity;
+		});
+        
+        L.geoJson(plants, {
+            pointToLayer: function(feature,latlng) {
+                 return L.circleMarker(latlng, {
+                     color: 'green',
+                     weight: 1,
+                     fillColor: 'blue',
+                     fillOpacity: .7,
+                     radius: getRadius(feature.properties.source["Hydro"])
+                 });   
+            },
+            
+            filter: function(feature, layer) {
+                var plantLatLng = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+                feature.properties.distanceFromLex = (plantLatLng.distanceTo(lexington)) / 1000;
+                if((feature.properties.distanceFromLex < 400) && (feature.properties.source["Hydro"] &&
+                   feature.properties.source["Hydro"] < 500)) {
+                    return feature;   
+                }
+            },
+        
+            onEachFeature: function(feature,layer) {
+                var props = feature.properties;
+                var content = "<b>"+props.plant_name+"</b><br>"+
+                    props.capacity.toLocaleString()+" MW<br>";
+                var sourceType = props.source;
+                for(var fuel in sourceType){
+                    content+="<b>"+fuel+"</b>: "+sourceType[fuel].toLocaleString()+" MW<br>";
+                }
+                    content+= "This plant is " + "<b>" +props.distanceFromLex.toLocaleString() + " km" + "</b>" + " from Lexington, KY";
+                layer.bindPopup(content); 
+                
+                layer.on('mouseover', function() {
+                    layer.setStyle({
+                        fillColor: 'red'
+                    });
+                });
+                layer.on('mouseout', function() {
+                    layer.setStyle({
+                        fillColor: 'blue'
+                    });
+                });
+            }
+            
+        }).addTo(map);
+        
+        function getRadius(val) {
+            var radius = Math.sqrt(val/Math.PI);
+            return radius * 2;   
+        }  
+
+          // add JavaScript here
+        
+    </script>
+    
+</body>
+
+</html>
