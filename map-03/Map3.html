@@ -148,6 +148,7 @@
     map.on('click', function(e) {
         for (var layer in layerInfo) {
             geoJsonLayers[layer].eachLayer(function(layer){
+            var props = layer.feature.properties;
             var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
 
             if(distance > 500) {
@@ -160,13 +161,37 @@
                     stroke: true,
                     fill: true  
                });  
-               layer.bindPopup("I am <b>"+distance.toLocaleString()+ 
-                               "km</b><br> from the click point.");
+            
+               layer.bindPopup("<b>"+props.plant_name+"</b><br>"+props.capacity.toLocaleString()+"MW<br>"+ "Located "+"<b>" +distance.toLocaleString()+" km</b><br> from map click.");
             }
             });
         }});
         
+    map.on('dblclick', function(e) {
+        for (var layer in layerInfo) {
+            geoJsonLayers[layer].eachLayer(function(layer){
+            var props = layer.feature.properties;
+            var distance = e.latlng.distanceTo(layer.getLatLng())/1000;
 
+            if(distance > 200) {
+                layer.setStyle({
+                    stroke: false,
+                    fill: false
+                });  
+            } else {
+               layer.setStyle({
+                    stroke: true,
+                    fill: true  
+               });  
+            
+               layer.bindPopup("<b>"+props.plant_name+"</b><br>"+props.capacity.toLocaleString()+"MW<br>"+ "Located "+"<b>" +distance.toLocaleString()+" km</b><br> from map click.");
+            }
+            });
+        }});
+        
+        
+        
+        map.doubleClickZoom.disable();
 
           // add JavaScript here
         
