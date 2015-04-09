@@ -79,9 +79,9 @@
                 
         // declare global variables
         
-//        var dataLayer,
-//            attribute = "OWNED_MORT",
-//            norm = "OCCUPIED";
+        var dataLayer,
+            attribute = "OWNED_MORT";
+        
 
         // AJAX requests to load data files
         
@@ -109,19 +109,42 @@
                 var props = counties.features[county].properties;
 //                console.log(props.COUNTY_FIP);
 
-            for(var d in data.data) {
-                if(props.COUNTY_FIP == data.data[d].CNTY) {
-                    counties.features[county].properties = data.data[d]; 
-                    break;
- 
+                for(var d in data.data) {
+                    
+                    if(props.COUNTY_FIP == data.data[d].CNTY) {
+                        counties.features[county].properties = data.data[d]; 
+                        break;
+
 //                console.log(data.data[d].CNTY);
+                    }
                 }
+                
             }
-                console.log(counties);
-            }
-        };
+            console.log(counties);
+            
+            drawMap(counties)
+        }
 
         // function to draw the map
+        
+        function drawMap(counties) {
+         
+            dataLayer = L.geoJson(counties, {
+              style: function(feature) {
+                  return {
+                      color: '#dddddd',
+                      weight: 2,
+                      fillOpacity: 1,
+                      fillColor: '#1f78b4'
+                  };
+              }
+            }).addTo(map);
+            
+            drawLegend();
+            createSliderUI();
+        
+ 
+        }
         
         // function to update the map
         
