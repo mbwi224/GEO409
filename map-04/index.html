@@ -24,8 +24,16 @@
             padding: 6px 10%;
         }
         h1 {
+            position: absolute;
+            z-index: 100;
+            top: 10px;
+            left: 60px;
             padding: 8px 15px;
-            margin: 0; 
+            margin: 0;
+            color: whitesmoke;
+            font-size: 1.5em;
+            background: rgba(25,25,25,0.8);
+            border-radius: 5px; 
         }
         #map {
             position: absolute;
@@ -51,14 +59,20 @@
     <script>
         
         var options = {
-            center: [38.2, -94],
-            zoom: 4,
-            minZoom: 4,
-            maxZoom: 6,
+            center: [38.2, -85.8],
+            zoom: 7,
+            minZoom: 7,
+            maxZoom: 9,
             dragging: true,
             zoomControl: true
         }
         var map = L.map('map', options);
+        // Added basemap
+        var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+        });
+        map.addLayer(tiles);
         
         // load map tiles and add to map
                 
