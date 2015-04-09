@@ -224,9 +224,9 @@
             
             // loop through all the counties
             dataLayer.eachLayer(function(layer) {
-                var value = layer.feature.properties[attribute]/layer.feature.properties[norm];
-                values.push(value);   // push the normalized value for each layer into the Array
-            }); 
+                var value = Number(layer.feature.properties[year]);
+                values.push(value);
+            });
             
             var breaks = ss.jenks(values, 5);  // determine the class breaks
             return breaks;  // return Array of class breaks

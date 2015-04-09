@@ -37,6 +37,10 @@
             background: rgba(25,25,25,0.8);
             border-radius: 5px; 
         }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
         #map {
             position: absolute;
             width: 100%;
@@ -50,7 +54,55 @@
         p {
             font-size: 1em;
             color: #001323;
-        }   
+        }
+        .legend {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            width: 160px;
+        }
+        .legend h3 {
+            font-size: 1.1em;
+            font-weight: bold;
+            line-height: 1em;
+            color: #001323;
+            margin: 0;
+        }
+        .legend li {
+            list-style-type: none;
+            height: 22px;
+        }
+        .legend span {
+            width: 30px;
+            height: 20px;
+            float: left;
+            margin-right: 10px;
+        }
+        #ui-controls {   
+            width: 160px;
+        }
+        label {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .info {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            text-align: right;   
+        }
+        .info h3 {
+            margin: 0;   
+        }
+        .leaflet-popup-content {
+            max-width: 120px;   
+        }
+        
+        
     </style>
 </head>
 
@@ -79,8 +131,8 @@
         map.addLayer(tiles);
                 
         // declare global variables
-        var dataLayer;
-        var attribute = 2001;
+        var dataLayer,
+            attribute = "2001";
 
 
         // AJAX requests to load data files
@@ -94,7 +146,22 @@
                     processData(counties, data);
                 }
             }); 
-        });                              
+            
+                        // create Leaflet data layer and add to map
+            dataLayer = L.geoJson(counties, {
+                 style: function(feature) {
+                    // style counties with initial default path options
+                    return {
+                            color: '#dddddd',
+                            weight: 2,
+                            fillOpacity: 1,
+                            fillColor: '#1f78b4'
+                        };
+                }          
+            }).addTo(map);
+            
+
+        })                              
  
         // function to process/bind data
         
@@ -120,44 +187,63 @@
 
         // function to draw the map
         
-        function drawMap(counties) {
-         
-            dataLayer = L.geoJson(counties, {
-//         change to reflect module-14       
-                style: function(feature) {
-                    return {
-                      color: '#dddddd',
-                      weight: 2,
-                      fillOpacity: 1,
-                      fillColor: '#1f78b4'
-                  };
-                }
-            }).addTo(map);
-            
-            updateMap();         
-        
-        }
-            
+
 
         // function to update the map
         
-        function updateMap() {
+        function drawMap() {
             
+            // get the class breaks for the initial data attribute
             var breaks = getClassBreaks();
-            
+
+            // loop through each county layer
             dataLayer.eachLayer(function(layer) {
                 
-                layer.setStyle({                                        
-                    fillColor: getColor(Number(layer.feature.properties[attribute]), breaks)
+                var props=layer.feature.properties;
+                
+                // set the fill color of layer based on its normalized data value
+                layer.setStyle({
+                    fillColor: getColor(props[attribute], breaks)
                 });
-        
+                
+                // bind a popup to layer with county-specific information
+                layer.bindPopup('<b>'+props["NAME"]  + ' County</b> <br>'+ attribute+ ':<b> ' +props[attribute]+ '%</b>');
+
+                // on mousing over layer
+                layer.on('mouseover', function() {
+                    
+                    // update the info panel
+                    updateInfo(this); 
+                    
+                    // change the stroke color and bring that element to the front
+                    layer.setStyle({color: 'yellow'}).bringToFront();  
+                });
+                
+                // on mousing off layer
+                layer.on('mouseout', function() {
+                    
+                    // reset the layer style to its original stroke color
+                    layer.setStyle({color: '#dddddd'});
+                });
+                
+            });  
+            
+            // when mousing over the map
+            dataLayer.on('mouseover', function() {
+                $(".info").show(); // display the info panel
             });
             
-//            console.log(breaks);
-//            updateLegend(breaks);
+            // when mousing off the map
+            dataLayer.on('mouseout', function() {
+                $(".info").hide();  // hide the info panel 
+            });
+            
+            // update the legend with the current data attribute information
+            updateLegend(breaks);
+            
         }
         
-        // function get the class breaks   
+        // function get the class breaks 
         
         function getClassBreaks() {
             
@@ -166,19 +252,23 @@
             
             // loop through all the counties
             dataLayer.eachLayer(function(layer) {
-//                console.log(layer.feature.properties[attribute]);
-                var value = layer.feature.properties[attribute];
-                values.push(Number(value));   // push value for each layer into the Array
+                var value = Number(layer.feature.properties[attribute]);
+                values.push(value);   // push the normalized value for each layer into the Array
             }); 
             
-            var breaks = ss.quantile(values, [0, 0.2, 0.4, 0.6, 0.8, 1]); // class breaks
+            var breaks = ss.quantile(values, [0, 0.2, 0.4, 0.6, 0.8, 1]); //New breaks, replaced jenks
             return breaks;  // return Array of class breaks
             
-        } 
+        }   
         
+
         // function to get the color value
         
         function getColor(d, breaks) {
+            // function accepts a single normalized data attribute value 
+            // and uses a series of conditional statements to determine which 
+            // which color value to return to return to the function caller
+            
             if(d <= breaks[1]) {
                 return '#f1eef6';
             } else if(d <= breaks[2]) {
