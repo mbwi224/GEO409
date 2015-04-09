@@ -78,34 +78,22 @@
         map.addLayer(tiles);
                 
         // declare global variables
-        
-<<<<<<< HEAD
-        var dataLayer,
-//        var attribute = 2001;
-            
-        
-=======
-//        var dataLayer,
-//            attribute = "OWNED_MORT",
-//            norm = "OCCUPIED";
->>>>>>> parent of 6cedb18... drew ky counties map
+        var dataLayer;
+        var attribute = 2001;
+
 
         // AJAX requests to load data files
         
-        $.getJSON ("ky-counties.json", function(counties) {
-            
+        $.getJSON("ky-counties.json", function(counties) {
             Papa.parse('ky-unemployment-data.csv', {
                 download: true,
                 header: true,
                 complete: function(data) {
                     
-                    
                     processData(counties, data);
-                    
                 }
-            }); //end of Papa.parse
-            
-        }); //end of getJSON                                
+            }); 
+        });                              
  
         // function to process/bind data
         
@@ -117,29 +105,20 @@
                 
                 console.log(props.props);
 
-<<<<<<< HEAD
+
                 for(var d in data.data) {
                     
                     if(props.CNTY == data.data[d].COUNTY_FIP) {
+                        
                         counties.features[county].properties = data.data[d]; 
                         break;
-
+                        }
                     }
-=======
-            for(var d in data.data) {
-                if(props.COUNTY_FIP == data.data[d].CNTY) {
-                    counties.features[county].properties = data.data[d]; 
-                    break;
- 
-//                console.log(data.data[d].CNTY);
->>>>>>> parent of 6cedb18... drew ky counties map
                 }
-            }
-<<<<<<< HEAD
-            
-            drawLegend();
+//            drawLegend();
             drawMap(counties);
         }
+
 
         // function to draw the map
         
@@ -160,15 +139,12 @@
             updateMap();         
         
         }
-        
-=======
-                console.log(counties);
-            }
-        };
+            
+
 
         // function to draw the map
         
->>>>>>> parent of 6cedb18... drew ky counties map
+
         // function to update the map
         
         function updateMap() {
