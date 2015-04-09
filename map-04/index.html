@@ -92,18 +92,34 @@
                 header: true,
                 complete: function(data) {
                     
-                    console.log(data);
+                    
+                    processData(counties, data);
                     
                 }
             }); //end of Papa.parse
             
-        }); //end of getJSON
-        
-
-        
-                                    
+        }); //end of getJSON                                
  
         // function to process/bind data
+        
+        function processData(counties, data) {
+         
+            for (var county in counties.features) {
+
+                var props = counties.features[county].properties;
+//                console.log(props.COUNTY_FIP);
+
+            for(var d in data.data) {
+                if(props.COUNTY_FIP == data.data[d].CNTY) {
+                    counties.features[county].properties = data.data[d]; 
+                    break;
+ 
+//                console.log(data.data[d].CNTY);
+                }
+            }
+                console.log(counties);
+            }
+        };
 
         // function to draw the map
         
