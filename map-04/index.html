@@ -123,12 +123,12 @@
 </head>
 
 <body>
-    <h1>Kentucky Unemployment Rates: 2001 - 2013</h1>
+    <h1>Kentucky Unemployment Rates: 2000 - 2013</h1>
     <div id='map'></div>
          <div id="ui-controls">
-            <label><span class="min">2001</span><span class="max">2013</span>
-                <input type="range" min = "2001", max= "2013", 
-                       value = "2001", step= "1", class="year-slider"></input>
+            <label><span class="min">2000</span><span class="max">2013</span>
+                <input type="range" min = "2000", max= "2013", 
+                       value = "2000", step= "1", class="year-slider"></input>
              </label>
 
         </div>
@@ -155,7 +155,7 @@
                 
         // declare global variables
         var dataLayer,
-            attribute = "2001";
+            attribute = "2000";
 
 
         // AJAX requests to load data files
@@ -414,7 +414,7 @@
             // build an HTML string of relevant information about that county
             var html = "<h3>"+props["NAME"]+" County" + "<br>" + "% Unemployment </h3>";
             
-            for(var i = 2001; i<= 2013; i++) {
+            for(var i = 2000; i<= 2013; i++) {
                 
                 html += "<br>" + i + "  :  <b>" + props[String(i)] + "%" +"</b>";
             }
