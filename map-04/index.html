@@ -9,7 +9,8 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.0/papaparse.min.js"></script>
-
+    <script src="simple_statistics.js"></script>
+    
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 
@@ -102,13 +103,10 @@
             for (var county in counties.features) {
 
                 var props = counties.features[county].properties; 
-                
-                console.log(props.props);
-
 
                 for(var d in data.data) {
                     
-                    if(props.CNTY == data.data[d].COUNTY_FIP) {
+                    if(props.COUNTY_FIP == data.data[d].CNTY) {
                         
                         counties.features[county].properties = data.data[d]; 
                         break;
@@ -141,10 +139,6 @@
         }
             
 
-
-        // function to draw the map
-        
-
         // function to update the map
         
         function updateMap() {
@@ -154,13 +148,13 @@
             dataLayer.eachLayer(function(layer) {
                 
                 layer.setStyle({                                        
-                    fillColor: getColor (Number(layer.feature.properties[attribute]), breaks)
+                    fillColor: getColor(Number(layer.feature.properties[attribute]), breaks)
                 });
         
-            })
+            });
             
 //            console.log(breaks);
-            updateLegend(breaks);
+//            updateLegend(breaks);
         }
         
         // function get the class breaks   
