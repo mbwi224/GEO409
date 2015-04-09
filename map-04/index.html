@@ -80,12 +80,13 @@
         // declare global variables
         
         var dataLayer,
-            attribute = "OWNED_MORT";
+//        var attribute = 2001;
+            
         
 
         // AJAX requests to load data files
         
-        $.getJSON("ky-counties.json", function(counties) {
+        $.getJSON ("ky-counties.json", function(counties) {
             
             Papa.parse('ky-unemployment-data.csv', {
                 download: true,
@@ -106,23 +107,23 @@
          
             for (var county in counties.features) {
 
-                var props = counties.features[county].properties;
-//                console.log(props.COUNTY_FIP);
+                var props = counties.features[county].properties; 
+                
+                console.log(props.props);
 
                 for(var d in data.data) {
                     
-                    if(props.COUNTY_FIP == data.data[d].CNTY) {
+                    if(props.CNTY == data.data[d].COUNTY_FIP) {
                         counties.features[county].properties = data.data[d]; 
                         break;
 
-//                console.log(data.data[d].CNTY);
                     }
                 }
                 
             }
-            console.log(counties);
             
-            drawMap(counties)
+            drawLegend();
+            drawMap(counties);
         }
 
         // function to draw the map
@@ -130,27 +131,73 @@
         function drawMap(counties) {
          
             dataLayer = L.geoJson(counties, {
-              style: function(feature) {
-                  return {
+                
+                style: function(feature) {
+                    return {
                       color: '#dddddd',
                       weight: 2,
                       fillOpacity: 1,
                       fillColor: '#1f78b4'
                   };
-              }
+                }
             }).addTo(map);
             
-            drawLegend();
-            createSliderUI();
+            updateMap();         
         
- 
         }
         
         // function to update the map
         
+        function updateMap() {
+            
+            var breaks = getClassBreaks();
+            
+            dataLayer.eachLayer(function(layer) {
+                
+                layer.setStyle({                                        
+                    fillColor: getColor (Number(layer.feature.properties[attribute]), breaks)
+                });
+        
+            })
+            
+//            console.log(breaks);
+            updateLegend(breaks);
+        }
+        
         // function get the class breaks   
         
+        function getClassBreaks() {
+            
+            // create empty Array for storing values
+            var values = [];
+            
+            // loop through all the counties
+            dataLayer.eachLayer(function(layer) {
+//                console.log(layer.feature.properties[attribute]);
+                var value = layer.feature.properties[attribute];
+                values.push(Number(value));   // push value for each layer into the Array
+            }); 
+            
+            var breaks = ss.quantile(values, [0, 0.2, 0.4, 0.6, 0.8, 1]); // class breaks
+            return breaks;  // return Array of class breaks
+            
+        } 
+        
         // function to get the color value
+        
+        function getColor(d, breaks) {
+            if(d <= breaks[1]) {
+                return '#f1eef6';
+            } else if(d <= breaks[2]) {
+                return '#bdc9e1';
+            } else if(d <= breaks[3]) {
+                return '#74a9cf';
+            } else if(d <= breaks[4]) {
+                return '#2b8cbe'
+            } else if(d <= breaks[5]) {
+                return '#045a8d'
+            }
+        }
                 
         // function to draw the legend
         
